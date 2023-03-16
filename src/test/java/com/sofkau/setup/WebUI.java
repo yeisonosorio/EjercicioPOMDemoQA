@@ -17,8 +17,7 @@ public class WebUI {
 
 
     private void setUpWebdriver() {
-      // System.setProperty(WEBDRIVER_CHROME_DRIVER,WEBDRIVER_CHROME_DRIVER_PATH);
-       WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     private void setUpWebdriverUrl() {
@@ -30,7 +29,7 @@ public class WebUI {
     }
 
 
-    protected void generalSetup(){
+    protected void generalSetup() {
         setUpLog4j();
         setUpWebdriver();
         setUpWebdriverUrl();
@@ -45,7 +44,7 @@ public class WebUI {
     }
 
 
-    private void setUpLog4j(){
+    private void setUpLog4j() {
         PropertyConfigurator.configure(USER_DIR.value() + LOG4J_PROPERTIES_FILE_PATH.getValue());
     }
 

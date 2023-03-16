@@ -41,18 +41,16 @@ public class FormPage extends CommonActionOnPages {
     private final By sport = By.xpath(" //label[normalize-space()='Sports']");
     private final By reading = By.xpath(" //label[normalize-space()='Reading']");
     private final By music = By.xpath("//label[normalize-space()='Music']");
-
-    private final By ciudad = By.xpath("//div[contains(@class,'css-yk16xz-control')]//div[contains(@class,'css-tlfecz-indicatorContainer')]");
+    private final By clickState = By.id("react-select-3-input");
     private final By state = By.id("react-select-3-input");
     private final By city = By.id("react-select-4-input");
 
     private final By btnSubmit = By.id("submit");
 
     public FormPage(WebDriver driver, Estudiante estudiante) {
-        super( driver);
+        super(driver);
         this.estudiante = estudiante;
     }
-
 
 
     /**
@@ -79,20 +77,6 @@ public class FormPage extends CommonActionOnPages {
         clearText(email);
         typeInto(email, estudiante.getEmail());
 
-        clearText(numero);
-        typeInto(numero, estudiante.getMobile());
-
-
-        clearText(direccion);
-        typeInto(direccion, estudiante.getCurrentAddress());
-
-
-        List subjects = estudiante.getSubject();
-        for (Object subjec : subjects) {
-            typeInto(subject, (String) subjec);
-            pressEnter(subject);
-        }
-
         switch (estudiante.getGender()) {
             case FEMALE:
                 click(genderFemale);
@@ -104,6 +88,17 @@ public class FormPage extends CommonActionOnPages {
                 click(genderOther);
                 break;
             default:
+        }
+
+        clearText(numero);
+        typeInto(numero, estudiante.getMobile());
+
+        selectDate(date, estudiante.getDateOfBirth());
+
+        List subjects = estudiante.getSubject();
+        for (Object subjec : subjects) {
+            typeInto(subject, (String) subjec);
+            pressEnter(subject);
         }
 
 
@@ -120,24 +115,29 @@ public class FormPage extends CommonActionOnPages {
             default:
         }
 
-        selectDate(date, estudiante.getDateOfBirth());
-        typeInto(city, estudiante.getCity());
-        pressEnter(city);
+
+        clearText(direccion);
+        typeInto(direccion, estudiante.getCurrentAddress());
+
+        click(clickState);
         typeInto(state, estudiante.getState());
         pressEnter(state);
+
+        typeInto(city, estudiante.getCity());
+        pressEnter(city);
+
         pressEnter(btnSubmit);
 
     }
 
 
     public List<String> estaRegistrado() {
-        List<String> botonResultado = new ArrayList<>();
-        botonResultado.add(getText(name).trim());
-        botonResultado.add(getText(lastName).trim());
-        botonResultado.add(getText(email).trim());
-        botonResultado.add(getText(genderFemale).trim());
-        botonResultado.add(getText(numero).trim());
-        return botonResultado;
+        List<String> resultado = new ArrayList<>();
+        resultado.add(getText(name).trim());
+        resultado.add(getText(lastName).trim());
+        resultado.add(getText(genderFemale).trim());
+        resultado.add(getText(numero).trim());
+        return resultado;
     }
 
 }

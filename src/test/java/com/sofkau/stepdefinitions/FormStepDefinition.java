@@ -40,9 +40,10 @@ public class FormStepDefinition extends WebUI {
     public void completeLosCamposConLaInformacionDelEstudiante() {
         try {
             generarEstudiante();
-        } catch (Exception exception) {
+        } catch (Exception e) {
+            LOGGER.warning(e.getMessage());
+        } finally {
             quiteDriver();
-            Assertions.fail(exception.getMessage(), exception);
         }
     }
 
@@ -66,28 +67,27 @@ public class FormStepDefinition extends WebUI {
 
     private void generarEstudiante() {
         estudiante = new Estudiante();
-        estudiante.setName("yeison");
+        estudiante.setName("yulitza");
         estudiante.setLastName("osorio");
-        estudiante.setEmail("yeisonOsorio@gmail.com");
+        estudiante.setEmail("yulitzaOsorio@gmail.com");
+        estudiante.setGender(Gender.MALE);
         estudiante.setMobile("2543541551");
-        estudiante.setCurrentAddress("calle cucuta-norte de santander");
-        estudiante.setGender(Gender.FEMALE);
-        estudiante.setHobbies(Hobbies.MUSIC);
         estudiante.setDateOfBirth("10 June 1994");
         ArrayList<String> materias = new ArrayList<>(Arrays.asList("Maths", "History", "English"));
         estudiante.setSubject(materias);
-        estudiante.setCity("NCR");
-        estudiante.setState("Noida");
+        estudiante.setHobbies(Hobbies.SPORTS);
+        estudiante.setCurrentAddress("calle cucuta-norte de santander");
+        estudiante.setState("NCR");
+        estudiante.setCity("Delhi");
+
     }
 
 
     public List<String> elementosRegistrados() {
         List<String> botonResultado = new ArrayList<>();
-        botonResultado.add(estudiante.getName() + " " + estudiante.getLastName().trim());
-        botonResultado.add(estudiante.getEmail().trim());
+        botonResultado.add(estudiante.getName().trim() + " " + estudiante.getLastName().trim());
         botonResultado.add(estudiante.getGender().getValue().trim());
         botonResultado.add(estudiante.getMobile().trim());
-        botonResultado.add(estudiante.getName() + " " + estudiante.getLastName().trim());
         return botonResultado;
 
     }

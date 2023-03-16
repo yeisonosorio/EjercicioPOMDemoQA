@@ -13,18 +13,12 @@ public class CommonActionOnPages {
         driver.findElement(locator).sendKeys(value);
     }
 
-    //polimosfirmo
-    // protected void typeInto(WebElement webElement, String value) {
-    //   webElement.sendKeys(value);
-    // }
 
     protected void clearText(By locator) {
         driver.findElement(locator).clear();
     }
 
-    //   protected void clearText(WebElement webElement) {
-    //     webElement.clear();
-    // }
+
 
     protected void click(By locator) {
         driver.findElement(locator).click();
@@ -32,11 +26,6 @@ public class CommonActionOnPages {
 
     protected void pressEnter(By locator) {
         driver.findElement(locator).sendKeys(Keys.ENTER);
-    }
-
-
-    public void clickElement(WebElement element) {
-        element.click();
     }
 
     protected void selectDate(By locator, String value) {
@@ -58,6 +47,12 @@ public class CommonActionOnPages {
 
     protected String getText(By locator) {
         return driver.findElement(locator).getText();
+    }
+
+
+    protected void setZoom (int zoomLevel) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.body.style.zoom = '" + zoomLevel + "%'");
     }
 
 
