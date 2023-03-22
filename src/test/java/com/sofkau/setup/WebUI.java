@@ -2,6 +2,7 @@ package com.sofkau.setup;
 
 import com.google.j2objc.annotations.Property;
 import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

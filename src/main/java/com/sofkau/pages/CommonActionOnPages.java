@@ -37,7 +37,10 @@ public class CommonActionOnPages {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript("arguments[0].scrollIntoView();", driver.findElement(locator));
     }
-
+    protected void scrollDown(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,1000)");
+    }
     /**
      * para realizar la comparacion, como se hace
      *

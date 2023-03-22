@@ -33,7 +33,7 @@ public class FormStepDefinition extends WebUI {
     @When("navega hasta la opcion de formulario")
     public void navegaHastaLaOpcionDeFormulario() throws InterruptedException {
         FormPage formPage = new FormPage(super.driver, estudiante);
-        formPage.clickInicio();
+        //formPage.clickInicio();
     }
 
     @When("complete los campos con la informacion del estudiante")

@@ -59,9 +59,11 @@ public class FormPage extends CommonActionOnPages {
 
 
     public void clickInicio() throws InterruptedException {
+        scrollDown();
         click(form);
         Thread.sleep(2000);
         click(practiceForm);
+        Thread.sleep(2000);
     }
 
 
@@ -70,6 +72,7 @@ public class FormPage extends CommonActionOnPages {
 
         clearText(name);
         typeInto(name, estudiante.getName());
+
 
         clearText(lastName);
         typeInto(lastName, estudiante.getLastName());
@@ -89,7 +92,7 @@ public class FormPage extends CommonActionOnPages {
                 break;
             default:
         }
-
+        scrollDown();
         clearText(numero);
         typeInto(numero, estudiante.getMobile());
 
@@ -119,7 +122,7 @@ public class FormPage extends CommonActionOnPages {
         clearText(direccion);
         typeInto(direccion, estudiante.getCurrentAddress());
 
-        click(clickState);
+
         typeInto(state, estudiante.getState());
         pressEnter(state);
 
