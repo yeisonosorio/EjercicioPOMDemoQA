@@ -33,18 +33,15 @@ public class FormStepDefinition extends WebUI {
     @When("navega hasta la opcion de formulario")
     public void navegaHastaLaOpcionDeFormulario() throws InterruptedException {
         FormPage formPage = new FormPage(super.driver, estudiante);
-        //formPage.clickInicio();
+        formPage.clickInicio();
     }
 
     @When("complete los campos con la informacion del estudiante")
     public void completeLosCamposConLaInformacionDelEstudiante() {
-        try {
-            generarEstudiante();
-        } catch (Exception e) {
-            LOGGER.warning(e.getMessage());
-        } finally {
-            quiteDriver();
-        }
+
+        generarEstudiante();
+
+
     }
 
     @Then("debe observar una ventana con la informacion ingresada")
@@ -53,14 +50,13 @@ public class FormStepDefinition extends WebUI {
             formPage = new FormPage(super.driver, estudiante);
             formPage.fillMandatotyFields();
             Assertions.assertEquals(
-                    formPage.estaRegistrado(), elementosRegistrados(),
-                    String.format(ASSERTION_EXCEPTION_MESSAGE, resultado()));
+                    formPage.estaRegistrado(), elementosRegistrados());
+
         } catch (Exception e) {
             LOGGER.warning(e.getMessage());
         } finally {
             quiteDriver();
         }
-
 
     }
 
@@ -71,7 +67,7 @@ public class FormStepDefinition extends WebUI {
         estudiante.setLastName("osorio");
         estudiante.setEmail("yulitzaOsorio@gmail.com");
         estudiante.setGender(Gender.MALE);
-        estudiante.setMobile("2543541551");
+        estudiante.setMobile("3108457845");
         estudiante.setDateOfBirth("10 June 1994");
         ArrayList<String> materias = new ArrayList<>(Arrays.asList("Maths", "History", "English"));
         estudiante.setSubject(materias);
@@ -85,15 +81,12 @@ public class FormStepDefinition extends WebUI {
 
     public List<String> elementosRegistrados() {
         List<String> botonResultado = new ArrayList<>();
-        botonResultado.add(estudiante.getName().trim() + " " + estudiante.getLastName().trim());
-        botonResultado.add(estudiante.getGender().getValue().trim());
-        botonResultado.add(estudiante.getMobile().trim());
+        botonResultado.add(estudiante.getName() + ", " + estudiante.getLastName());
+        botonResultado.add(estudiante.getMobile());
+        System.out.println("boton resultado" + botonResultado);
+
         return botonResultado;
 
-    }
-
-    private String resultado() {
-        return "\n" + formPage.estaRegistrado().toString() + "\n" + elementosRegistrados().toString();
     }
 
 

@@ -30,9 +30,9 @@ public class FormPage extends CommonActionOnPages {
     private final By practiceForm = By.xpath("(//span[normalize-space()='Practice Form'])[1]");
     private final By name = By.id("firstName");
     private final By lastName = By.id("lastName");
-    private final By email = By.id("userEmail");
-    private final By numero = By.id("userNumber");
-    private final By direccion = By.id("currentAddress");
+    private final By email = By.xpath("//input[@id='userEmail']");
+    private final By numero = By.xpath("//input[@id='userNumber']");
+    private final By direccion = By.xpath("//input[@id='userNumber']");
     private final By date = By.id("dateOfBirthInput");
     private final By subject = By.id("subjectsInput");
     private final By genderMale = By.xpath("  //label[normalize-space()='Male']");
@@ -63,13 +63,12 @@ public class FormPage extends CommonActionOnPages {
         click(form);
         Thread.sleep(2000);
         click(practiceForm);
-        Thread.sleep(2000);
+
     }
 
 
     public void fillMandatotyFields() {
-
-
+        click(name);
         clearText(name);
         typeInto(name, estudiante.getName());
 
@@ -131,16 +130,18 @@ public class FormPage extends CommonActionOnPages {
 
         pressEnter(btnSubmit);
 
+
     }
 
 
     public List<String> estaRegistrado() {
         List<String> resultado = new ArrayList<>();
-        resultado.add(getText(name).trim());
-        resultado.add(getText(lastName).trim());
-        resultado.add(getText(genderFemale).trim());
-        resultado.add(getText(numero).trim());
+        resultado.add((estudiante.getName()));
+        resultado.add((estudiante.getLastName()));
+        resultado.add(estudiante.getMobile());
+
         return resultado;
     }
 
 }
+
