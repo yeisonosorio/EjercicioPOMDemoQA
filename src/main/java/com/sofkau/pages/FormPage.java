@@ -28,26 +28,26 @@ public class FormPage extends CommonActionOnPages {
 
     private final By form = By.xpath("(//div[@class='avatar mx-auto white'])[2]");
     private final By practiceForm = By.xpath("(//span[normalize-space()='Practice Form'])[1]");
-    private final By name = By.id("firstName");
+    private final By name = By.xpath("//*[@id=\"firstName\"]");
     private final By lastName = By.id("lastName");
     private final By email = By.xpath("//input[@id='userEmail']");
     private final By numero = By.xpath("//input[@id='userNumber']");
-    private final By direccion = By.xpath("//input[@id='userNumber']");
+    private final By direccion = By.xpath("//*[@id=\"currentAddress\"]");
     private final By date = By.id("dateOfBirthInput");
     private final By subject = By.id("subjectsInput");
-    private final By genderMale = By.xpath("  //label[normalize-space()='Male']");
-    private final By genderFemale = By.xpath(" //label[normalize-space()='Female']");
-    private final By genderOther = By.xpath("//label[normalize-space()='Other']");
-    private final By sport = By.xpath(" //label[normalize-space()='Sports']");
+    private final By genderMale = By.xpath("//*[@id=\"genterWrapper\"]/div[2]/div[1]/label");
+    private final By genderFemale = By.cssSelector("#gender-radio-2+label");
+    private final By genderOther = By.cssSelector("#gender-radio-3+label");
+    private final By sport = By.xpath("//label[normalize-space()='Sports']");
     private final By reading = By.xpath(" //label[normalize-space()='Reading']");
     private final By music = By.xpath("//label[normalize-space()='Music']");
-    private final By clickState = By.id("react-select-3-input");
-    private final By state = By.id("react-select-3-input");
-    private final By city = By.id("react-select-4-input");
+
+    private final By state = By.cssSelector("input[id='react-select-3-input']");
+    private final By city = By.cssSelector("input[id='react-select-4-input']");
 
     private final By btnSubmit = By.id("submit");
 
-    public FormPage(WebDriver driver, Estudiante estudiante) {
+    public FormPage(Estudiante estudiante, WebDriver driver) {
         super(driver);
         this.estudiante = estudiante;
     }
@@ -56,6 +56,10 @@ public class FormPage extends CommonActionOnPages {
     /**
      * metodo para hacer click
      */
+   //Tabla final
+
+    private final By nombreEstudiante = By.xpath("/html/body/div[5]/div/div/div[2]/div/table/tbody/tr[1]/td[2]");
+    private final By numeroEstudiante = By.xpath("/html/body/div[5]/div/div/div[2]/div/table/tbody/tr[4]/td[2]");
 
 
     public void clickInicio() throws InterruptedException {
@@ -68,7 +72,8 @@ public class FormPage extends CommonActionOnPages {
 
 
     public void fillMandatotyFields() {
-        click(name);
+
+        // click(name);
         clearText(name);
         typeInto(name, estudiante.getName());
 
@@ -78,6 +83,7 @@ public class FormPage extends CommonActionOnPages {
 
         clearText(email);
         typeInto(email, estudiante.getEmail());
+
 
         switch (estudiante.getGender()) {
             case FEMALE:
@@ -91,6 +97,8 @@ public class FormPage extends CommonActionOnPages {
                 break;
             default:
         }
+
+
         scrollDown();
         clearText(numero);
         typeInto(numero, estudiante.getMobile());
@@ -121,7 +129,7 @@ public class FormPage extends CommonActionOnPages {
         clearText(direccion);
         typeInto(direccion, estudiante.getCurrentAddress());
 
-
+        setZoom(55);
         typeInto(state, estudiante.getState());
         pressEnter(state);
 
@@ -136,12 +144,12 @@ public class FormPage extends CommonActionOnPages {
 
     public List<String> estaRegistrado() {
         List<String> resultado = new ArrayList<>();
-        resultado.add((estudiante.getName()));
-        resultado.add((estudiante.getLastName()));
-        resultado.add(estudiante.getMobile());
+        resultado.add(getText(nombreEstudiante).trim());
+        resultado.add(getText(numeroEstudiante).trim());
 
         return resultado;
     }
+
 
 }
 

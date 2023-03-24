@@ -9,18 +9,17 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.WebDriver;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class FormStepDefinition extends WebUI {
 
     private Estudiante estudiante;
     private FormPage formPage;
-    public static Logger LOGGER = Logger.getLogger(String.valueOf(FormStepDefinition.class));
+    public static Logger LOGGER = Logger.getLogger(FormStepDefinition.class);
 
     private static final String ASSERTION_EXCEPTION_MESSAGE = "No son los valores esperados";
 
@@ -32,7 +31,7 @@ public class FormStepDefinition extends WebUI {
 
     @When("navega hasta la opcion de formulario")
     public void navegaHastaLaOpcionDeFormulario() throws InterruptedException {
-        FormPage formPage = new FormPage(super.driver, estudiante);
+        FormPage formPage = new FormPage(estudiante, super.driver);
         formPage.clickInicio();
     }
 
@@ -47,15 +46,15 @@ public class FormStepDefinition extends WebUI {
     @Then("debe observar una ventana con la informacion ingresada")
     public void debeObservarUnaVentanaConLaInformacionIngresada() {
         try {
-            formPage = new FormPage(super.driver, estudiante);
+            formPage = new FormPage(estudiante, super.driver);
             formPage.fillMandatotyFields();
             Assertions.assertEquals(
-                    formPage.estaRegistrado(), elementosRegistrados());
-
-        } catch (Exception e) {
-            LOGGER.warning(e.getMessage());
+                    formPage.estaRegistrado(), elementosRegistrados(),
+                    String.format(ASSERTION_EXCEPTION_MESSAGE, resultado()));
+        } catch (Exception exception) {
+            Assertions.fail(exception.getMessage(), exception);
         } finally {
-            quiteDriver();
+            //quiteDriver();
         }
 
     }
@@ -81,12 +80,17 @@ public class FormStepDefinition extends WebUI {
 
     public List<String> elementosRegistrados() {
         List<String> botonResultado = new ArrayList<>();
-        botonResultado.add(estudiante.getName() + ", " + estudiante.getLastName());
-        botonResultado.add(estudiante.getMobile());
+        botonResultado.add(estudiante.getName().trim() + " " + estudiante.getLastName().trim());
+        botonResultado.add(estudiante.getMobile().trim());
         System.out.println("boton resultado" + botonResultado);
 
         return botonResultado;
 
+    }
+
+
+    private String resultado() {
+        return "\n" + formPage.estaRegistrado().toString() + "\n\r" + elementosRegistrados().toString();
     }
 
 
